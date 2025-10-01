@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>나의 첫 웹사이트</title>
+  <meta name="description" content="VS Code로 만드는 첫 웹사이트 스타터 템플릿" />
+  <link rel="icon" href="data:," />
+  <style>
+    /* ---- 1) 미니 리셋 & 디자인 토큰 ---- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    :root { 
+      --bg: #0b0c10;
+      --panel: #111317;
+      --text: #e6e6e6;
+      --muted: #9aa0a6;
+      --brand: #5c7cfa;
+      --brand-2: #22d3ee;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --maxw: 1100px;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg:#ffffff; --panel:#f6f7fb; --text:#111317; --muted:#5f6368; }
+    }
+    body { font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif; background: linear-gradient(120deg, var(--bg), #0f172a); color: var(--text); }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ---- 2) 레이아웃 ---- */
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 24px; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(1.2) blur(6px);
+      background: color-mix(in hsl, var(--bg) 70%, transparent);
+      border-bottom: 1px solid rgba(255,255,255,.065);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 24px; }
+    .logo { font-weight: 800; letter-spacing: .2px; display:flex; align-items:center; gap:10px }
+    .logo-badge { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(45deg, var(--brand), var(--brand-2)); box-shadow: 0 0 0 4px rgba(92,124,250,.25); }
+    .menu { display: flex; gap: 14px; align-items: center; }
+    .menu a { padding: 8px 12px; border-radius: 10px; }
+    .menu a:hover { background: rgba(255,255,255,.06); text-decoration: none; }
+    .menu-toggle { display:none; }
+
+    /* ---- 3) 히어로 ---- */
+    .hero { padding: 72px 24px 28px; text-align: center; }
+    .hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 12px; letter-spacing: -.5px; }
+    .hero p { color: var(--muted); max-width: 720px; margin: 0 auto; }
+    .cta { margin-top: 24px; display: inline-flex; gap: 10px; }
+    .btn { padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); cursor: pointer; font-weight: 600; }
+    .btn.primary { background: linear-gradient(45deg, var(--brand), var(--brand-2)); color: white; border: none; }
+    .btn.ghost { background: transparent; color: var(--text); }
+
+    /* ---- 4) 카드 섹션 ---- */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; padding: 26px; }
+    .card { grid-column: span 12; background: var(--panel); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); }
+    @media (min-width: 680px) { .card { grid-column: span 6; } }
+    @media (min-width: 980px) { .card { grid-column: span 4; } }
+
+    /* ---- 5) 푸터 ---- */
+    footer { padding: 24px; color: var(--muted); text-align: center; }
+
+    /* ---- 6) 유틸 ---- */
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); padding: 2px 6px; border-radius: 8px; }
+    .tip { border-left: 3px solid var(--brand); background: rgba(92,124,250,.08); padding: 10px 12px; border-radius: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav wrap">
+      <div class="logo"><span class="logo-badge"></span> 나의 첫 웹사이트</div>
+      <button class="menu-toggle btn ghost" aria-expanded="false" aria-controls="menu">메뉴</button>
+      <div id="menu" class="menu" role="navigation" aria-label="주 메뉴">
+        <a href="#start">시작하기</a>
+        <a href="#features">기능</a>
+        <a href="#contact">문의</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="start">
+      <h1>VS Code로 <span style="background:linear-gradient(45deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">첫 웹사이트</span> 만들기</h1>
+      <p>
+        이 템플릿은 <b>하나의 HTML 파일</b> 안에 스타일(CSS)과 스크립트(JS)를 함께 담았습니다. 
+        초보자가 <span class="kbd">index.html</span> 파일 하나로 구조를 익히고, 나중에 분리해 확장할 수 있도록 구성했습니다.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#features">바로 살펴보기</a>
+        <a class="btn ghost" href="#contact">문의하기</a>
+      </div>
+    </section>
+
+    <section class="grid" id="features" aria-labelledby="features-title">
+      <h2 id="features-title" class="hidden">기능</h2>
+      <article class="card">
+        <h3>반응형 레이아웃</h3>
+        <p>그리드 레이아웃으로 모바일 → 데스크톱까지 자동 적응합니다.</p>
+      </article>
+      <article class="card">
+        <h3>다크/라이트 모드</h3>
+        <p><code>prefers-color-scheme</code>를 사용해 시스템 테마를 따라갑니다.</p>
+      </article>
+      <article class="card">
+        <h3>접근성 기본값</h3>
+        <p>시맨틱 태그, <code>aria-*</code> 속성, 포커스 가능한 버튼 등 기본을 포함합니다.</p>
+      </article>
+    </section>
+
+    <section class="grid" id="contact">
+      <article class="card" style="grid-column: span 12;">
+        <h3>빠른 수정 방법</h3>
+        <p class="tip">텍스트를 바꿔보세요: 상단의 <span class="kbd">h1</span> 제목이나 카드의 문장을 직접 수정하면 즉시 반영됩니다.</p>
+        <ol>
+          <li><span class="kbd">index.html</span>을 VS Code에서 열기</li>
+          <li>Live Server로 실행(없으면 아래 안내 참고)</li>
+          <li>제목/문단/링크 내용을 바꾸고 저장(<span class="kbd">Ctrl/Cmd + S</span>)</li>
+          <li>브라우저가 자동 새로고침되며 결과 확인</li>
+        </ol>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> 나의 첫 웹사이트 · Made with ❤️
+  </footer>
+
+  <script>
+    // ---- A) 현재 연도 표시 ----
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---- B) 모바일 메뉴 토글 ----
+    const menu = document.getElementById('menu');
+    const toggle = document.querySelector('.menu-toggle');
+    const mq = window.matchMedia('(max-width: 720px)');
+
+    function applyMenuMode() {
+      if (mq.matches) {
+        toggle.style.display = 'inline-flex';
+        menu.style.display = 'none';
+        toggle.setAttribute('aria-expanded', 'false');
+      } else {
+        toggle.style.display = 'none';
+        menu.style.display = 'flex';
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    }
+    applyMenuMode();
+    mq.addEventListener('change', applyMenuMode);
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      menu.style.display = expanded ? 'none' : 'flex';
+    });
+
+    // ---- C) 예시: 스무스 스크롤 ----
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
